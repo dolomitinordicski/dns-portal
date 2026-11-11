@@ -15,7 +15,7 @@ Do not interpret the selection of a destination as proof of authorisation.
 
 ## Publishing
 
-The code belongs to `dolomitinordicski`. CI builds only; publishing is a separate manual GitHub Actions workflow (`DNS Portal — Publish GitHub Pages`). Merging a PR does not publish. Only run this workflow after the explicit release approval and a successful CI build.
+The code belongs to `dolomitinordicski`. The `DNS Portal — GitHub Pages` workflow builds on pull requests without deploying. After an explicitly approved PR is merged to `main`, the push triggers an automatic build and GitHub Pages deployment, provided the build succeeds. Manual `workflow_dispatch` is retained for exceptional reruns. The separate `DNS Portal CI` workflow remains a build check.
 In Settings → Pages choose Source: GitHub Actions. For first release, leave the custom domain empty; verify the generated `github.io/dns-portal/` URL before any domain cutover.
 Do not add a CNAME yet; avoid breaking an existing `partner.dolomitinordicski.com` service.
 Keep the current DNS records unchanged until the target Pages deployment has been verified.
