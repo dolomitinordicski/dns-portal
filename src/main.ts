@@ -58,13 +58,13 @@ function sectionTitle(title: string, subtitle: string) {
 }
 function resource(title: string, description: string, url: string, action: string) {
   const link = safeUrl(url);
-  const card = element(link ? 'a' : 'div', 'dns-card resource-card');
+  const card = element(link ? 'a' : 'div', 'resource-card');
   if (link) {
     (card as HTMLAnchorElement).href = link;
     (card as HTMLAnchorElement).rel = 'noopener noreferrer';
   } else card.classList.add('unavailable');
   card.append(element('h3', 'resource-title', title), element('p', 'resource-description', description));
-  const cta = element('span', 'dns-button resource-action', link ? action : translations[language].pending);
+  const cta = element('span', 'resource-action', link ? action : translations[language].pending);
   cta.dataset.variant = link ? 'secondary' : 'tertiary';
   card.append(cta);
   return card;
@@ -112,6 +112,13 @@ function render() {
   if (safeUrl(heroImageUrl)) hero.style.setProperty('--portal-hero-image', 'url("' + safeUrl(heroImageUrl) + '")');
   const intro = element('div', 'intro');
   intro.append(element('h1', undefined, t.heading), element('p', undefined, t.description));
+  const heroSignals = element('div', 'hero-signals');
+  heroSignals.append(
+    icon('partner'), element('span', undefined, t.heroCollaborate),
+    icon('brand'), element('span', undefined, t.heroResources),
+    icon('areas'), element('span', undefined, t.heroIdentity)
+  );
+  intro.append(heroSignals);
   hero.append(intro);
   main.append(hero);
 
@@ -144,7 +151,7 @@ function render() {
   publicSection.append(publicHeading);
   const publicGrid = element('div', 'public-grid');
 
-  const corporate = element('div', 'dns-card resource-card');
+  const corporate = element('div', 'resource-card');
   corporate.append(element('h3', 'resource-title', t.brand), element('p', 'resource-description', t.brandDescription));
   const corporateDetails = element('details', 'corporate-details');
   corporateDetails.append(element('summary', undefined, t.brand));
@@ -175,14 +182,22 @@ function render() {
   corporate.prepend(icon('brand'));
   corporate.classList.add('public-tool');
 
-  const logos = element('div', 'dns-card resource-card');
-  logos.append(element('h3', 'resource-title', t.logos));
-  logos.append(
-    resource(t.logoWeb, 'PNG', logoWebUrl, t.download),
-    resource(t.logoPrint, 'PNG', logoPrintUrl, t.download)
-  );
-  logos.classList.add('logo-resources', 'public-tool');
+  const logos = element('div', 'resource-card logo-resources public-tool');
+  logos.append(element('h3', 'resource-title', t.logos), element('p', 'resource-description', t.logosDescription));
   logos.prepend(icon('logos'));
+  const logoActions = element('div', 'logo-downloads');
+  ([
+    [logoWebUrl, t.logoWeb],
+    [logoPrintUrl, t.logoPrint],
+  ] as const).forEach(([url, label]) => {
+    const action = element('a', 'logo-download', label);
+    action.href = url;
+    action.rel = 'noopener noreferrer';
+    action.target = '_blank';
+    action.setAttribute('aria-label', label);
+    logoActions.append(action);
+  });
+  logos.append(logoActions);
   const widgetCard = resource(t.widget, t.widgetDescription, widgetUrl, t.enter);
   widgetCard.classList.add('public-tool');
   widgetCard.prepend(icon('widget'));
