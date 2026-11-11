@@ -76,7 +76,7 @@ function render() {
   (header.querySelector('img') as HTMLImageElement).src = logoWebUrl;
   const langNav = header.querySelector('nav')!;
   (['it', 'de', 'en'] as Language[]).forEach(lang => {
-    const button = element('button', 'dns-portal-language', lang.toUpperCase());
+    const button = element('button', 'dns-tool-header-session-action', lang.toUpperCase());
     button.type = 'button';
     button.lang = lang;
     button.setAttribute('aria-pressed', String(language === lang));
