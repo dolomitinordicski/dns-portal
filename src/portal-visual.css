@@ -10,31 +10,37 @@
 .portal-hero {
   position: relative;
   isolation: isolate;
-  min-height: 280px;
-  padding: clamp(1.5rem, 4vw, 3rem);
+  /* Full-bleed photo, while the rest of DNS Portal stays in Foundation's content width. */
+  width: 100vw;
+  width: 100dvw;
+  margin-inline: calc(50% - 50vw);
+  margin-inline: calc(50% - 50dvw);
+  min-height: clamp(350px, 40vw, 510px);
+  padding: clamp(2.25rem, 5vw, 4.5rem) max(1.5rem, calc((100vw - 1120px) / 2));
   overflow: hidden;
-  border-radius: 0 0 var(--dns-card-radius) var(--dns-card-radius);
+  border-radius: 0;
   background:
-    linear-gradient(90deg, var(--color-dns-bg) 4%, color-mix(in srgb, var(--color-dns-bg) 94%, transparent) 45%, color-mix(in srgb, var(--portal-ice) 28%, transparent) 100%),
+    linear-gradient(90deg,
+      var(--color-dns-bg) 0%,
+      color-mix(in srgb, var(--color-dns-bg) 94%, transparent) 21%,
+      color-mix(in srgb, var(--color-dns-bg) 69%, transparent) 43%,
+      color-mix(in srgb, var(--color-dns-light) 12%, transparent) 70%,
+      transparent 100%),
     var(--portal-hero-image, linear-gradient(120deg, var(--color-dns-bg), var(--portal-ice)));
   background-size: cover;
-  background-position: center;
+  background-position: center 48%;
 }
-.portal-hero::before, .portal-hero::after {
+
+.portal-hero::after {
   content: "";
   position: absolute;
-  z-index: -1;
   pointer-events: none;
-  width: 110%;
-  height: 46%;
-  left: -6%;
-  bottom: -33%;
-  border-radius: 48% 52% 0 0;
-  background: color-mix(in srgb, var(--portal-ice) 36%, transparent);
-  transform: rotate(-3deg);
+  z-index: -1;
+  inset: auto 0 0;
+  height: 80px;
+  background: linear-gradient(0deg, color-mix(in srgb, var(--color-dns-bg) 85%, transparent), transparent);
 }
-.portal-hero::after { bottom: -39%; left: 24%; opacity: .6; transform: rotate(3deg); }
-.intro { position: relative; max-width: 660px; }
+.intro { position: relative; max-width: 560px; padding: 1rem 0; }
 .intro .dns-kicker { margin: 0; }
 .intro h1 {
   font-family: var(--font-heading);
@@ -52,14 +58,15 @@
 .portal-section { margin-top: 1.6rem; }
 .intranet {
   position: relative;
-  margin-top: -1rem;
+  margin-top: -3.25rem;
   z-index: 1;
   padding: clamp(1.1rem, 3vw, 2rem);
   border: 1px solid color-mix(in srgb, var(--color-dns-surface) 82%, var(--color-dns-border));
   border-radius: calc(var(--dns-card-radius) * 2);
-  background: color-mix(in srgb, var(--color-dns-surface) 84%, var(--color-dns-light));
+  background: color-mix(in srgb, var(--color-dns-surface) 91%, var(--color-dns-light));
   box-shadow: 0 12px 30px color-mix(in srgb, var(--color-dns-deep) 12%, transparent);
-  backdrop-filter: blur(12px);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
 }
 .intranet-label { font: 700 var(--dns-label-size)/1.2 var(--font-display); color: var(--color-dns-mid); text-transform: uppercase; letter-spacing: var(--dns-uppercase-tracking); }
 .intranet .section-heading { text-align: center; margin: .4rem 0 1.15rem; }
@@ -72,46 +79,72 @@
   grid-template-columns: 66px 1fr;
   grid-template-rows: auto auto 1fr;
   gap: .35rem 1rem;
-  min-height: 180px;
+  min-height: 210px;
   padding: 1.35rem;
   border-radius: calc(var(--dns-card-radius) * 1.5);
-  border: 1px solid color-mix(in srgb, var(--color-dns-light) 55%, transparent);
+  border: 1px solid color-mix(in srgb, var(--color-dns-light) 32%, transparent);
   overflow: hidden;
   isolation: isolate;
   box-shadow: var(--dns-card-shadow);
 }
 .access-grid .resource-card::after {
-  content:""; pointer-events:none; position:absolute; right:-8%; bottom:-62%;
-  width:80%; height:100%; background: color-mix(in srgb, var(--color-dns-light) 24%, transparent);
-  transform: rotate(-18deg); border-radius: 45%; z-index:-1;
+  content: "";
+  pointer-events: none;
+  position: absolute;
+  right: -10%;
+  bottom: -48%;
+  width: 75%;
+  height: 75%;
+  background: color-mix(in srgb, var(--color-dns-light) 10%, transparent);
+  transform: rotate(-16deg);
+  border-radius: 48%;
+  z-index: -1;
 }
 .destination-partner {
+  /* Dark, saturated petrol glass supports genuinely white typography. */
   color: #fff;
-  background: linear-gradient(126deg, var(--color-dns-deep), var(--color-dns-mid));
+  background:
+    linear-gradient(123deg,
+      color-mix(in srgb, var(--color-dns-deep) 97%, #000) 0%,
+      color-mix(in srgb, var(--color-dns-deep) 82%, #000) 60%,
+      color-mix(in srgb, var(--color-dns-mid) 62%, var(--color-dns-deep)) 100%);
 }
+.access-grid .destination-partner .resource-title,
+.access-grid .destination-partner .resource-description { color: #fff; opacity: 1; }
+.access-grid .destination-partner::after { background: color-mix(in srgb, var(--color-dns-light) 8%, transparent); }
+
 .destination-areas {
-  color: var(--color-dns-primary-dark);
-  background: linear-gradient(120deg, var(--color-dns-light), color-mix(in srgb, var(--color-dns-light) 72%, var(--color-dns-surface)));
+  color: var(--color-dns-deep);
+  background: linear-gradient(126deg,
+    color-mix(in srgb, var(--color-dns-light) 88%, var(--color-dns-surface)),
+    color-mix(in srgb, var(--color-dns-light) 62%, var(--color-dns-surface)));
 }
+.access-grid .destination-areas .resource-title,
+.access-grid .destination-areas .resource-description { color: var(--color-dns-deep); opacity: 1; }
+
 .destination .portal-icon:first-child {
   grid-row: 1 / 4; grid-column: 1;
   width: 58px; height: 58px; display:grid; place-items:center;
   border-radius: var(--dns-card-radius);
-  background: color-mix(in srgb, var(--color-dns-surface) 86%, transparent);
+  background: color-mix(in srgb, var(--color-dns-surface) 92%, transparent);
   color: var(--color-dns-deep);
 }
 .destination .portal-icon:first-child svg { width: 33px; height: 33px; }
 .destination .resource-title {
   grid-column: 2; margin:0; font: 700 clamp(1.2rem, 2.4vw, 1.65rem)/1.2 var(--font-heading); color: inherit;
 }
-.destination .resource-description { grid-column: 2; margin:0; color: inherit; opacity: .92; max-width: 340px; }
+.destination .resource-description { grid-column: 2; margin:0; color: inherit; max-width: 340px; font-size: .9rem; line-height: 1.55; }
 .destination .resource-action {
   grid-column: 2; align-self: end; justify-self: start; margin-top: .7rem;
-  border-radius: var(--dns-badge-radius); min-height: 34px; padding: .5rem .95rem; font-size: .8rem;
+  border-radius: var(--dns-badge-radius); min-height: 40px; padding: .65rem 1rem; font-size: .82rem; font-weight: 700; text-align: center;
 }
-.destination-partner .resource-action { background: var(--color-dns-surface); color: var(--color-dns-primary-dark); }
-.destination-areas .resource-action { background: var(--color-dns-primary-dark); color: #fff; }
-.destination .portal-icon:last-child { position: absolute; right: 1rem; top: 1.1rem; color: inherit; opacity: .9; }
+.access-grid .destination-partner .resource-action { background: #fff; color: var(--color-dns-deep); border-color: transparent; }
+.access-grid .destination-areas .resource-action { background: var(--color-dns-deep); color: #fff; border-color: transparent; }
+.destination .portal-icon:last-child { position: absolute; right: 1rem; top: 1.1rem; color: inherit; opacity: .85; }
+.access-grid .unavailable { opacity: 1; }
+.access-grid .unavailable .resource-action { background: color-mix(in srgb, #fff 90%, transparent); color: var(--color-dns-deep); }
+.access-grid .unavailable .portal-icon:last-child { display: none; }
+
 .intranet .notice { margin: 1rem auto 0; display:flex; align-items:center; justify-content:center; gap:.45rem; color: var(--color-dns-muted); font-size:.77rem; text-align:center; }
 .intranet .notice .portal-icon svg { width: 18px; height: 18px; }
 
@@ -132,6 +165,7 @@
   border-radius: var(--dns-card-radius);
   background:var(--color-dns-surface);
   box-shadow:var(--dns-card-shadow);
+  min-height: 155px;
 }
 .public-tool > .portal-icon:first-child {
   display:grid; place-items:center; grid-column:1; grid-row:1 / 4;
@@ -154,15 +188,29 @@
 }
 @media (max-width: 1023px) { .public-grid {grid-template-columns:repeat(2,minmax(0,1fr));} }
 @media (max-width: 767px) {
-  .portal-hero {padding:1.4rem 0 2rem; min-height:220px;}
+  .portal-hero { padding: 2rem max(1rem, 5vw) 4.5rem; min-height: 320px; background-position: 62% center; }
+  .portal-hero { background-image: linear-gradient(90deg, color-mix(in srgb, var(--color-dns-bg) 98%, transparent), color-mix(in srgb, var(--color-dns-bg) 68%, transparent) 72%, transparent), var(--portal-hero-image, linear-gradient(120deg, var(--color-dns-bg), var(--portal-ice))); }
+  .intro { max-width: 440px; }
   .hero-signals {display:none;}
-  .intranet {margin-top:0;}
+  .intranet {margin-top:-2rem; padding: 1rem;}
   .access-grid, .public-grid {grid-template-columns:1fr;}
-  .access-grid .resource-card {min-height:160px;grid-template-columns:50px 1fr;padding:1rem;}
+  .access-grid .resource-card { min-height: 175px; grid-template-columns: 50px 1fr; padding: 1rem; }
   .destination .portal-icon:first-child {width:44px;height:44px;}
   .destination .portal-icon:first-child svg {width:26px;height:26px;}
 }
 @media (prefers-reduced-motion:reduce) {
   a.destination, a.public-tool {transition:none;}
   a.destination:hover, a.public-tool:hover {transform:none;}
+}
+
+/* Keyboard focus must remain clearly visible on light and dark destinations. */
+a.resource-card:focus-visible, .corporate-details summary:focus-visible, .brand-guideline summary:focus-visible {
+  outline: 3px solid var(--color-dns-mid);
+  outline-offset: 3px;
+}
+.destination-partner:focus-visible { outline-color: var(--color-dns-light); }
+@media (max-width: 420px) {
+  .destination .resource-action { max-width: 100%; white-space: normal; }
+  .access-grid .resource-card { grid-template-columns: 44px minmax(0, 1fr); column-gap: .75rem; }
+  .destination .portal-icon:first-child { width: 40px; height: 40px; }
 }
