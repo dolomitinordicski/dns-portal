@@ -2,7 +2,7 @@ import { DNS_DESIGN_SYSTEM } from '@dolomitinordicski/dns-shared-data/design-sys
 import { translations, type Language } from '../content/translations';
 import { BRAND_GUIDELINES } from '../content/brand-guidelines';
 import { PortalIcon } from '../shared/PortalIcon';
-import { portalConfig, safeUrl } from '../shared/portalConfig';
+import { portalConfig } from '../shared/portalConfig';
 
 function CorporateDesign({ language }: { language: Language }) {
   const t = translations[language];
@@ -45,27 +45,24 @@ function OfficialLogos({ language }: { language: Language }) {
   </div>;
 }
 
-function WidgetLink({ language }: { language: Language }) {
+function WidgetLink({ language, onOpenWidget }: { language: Language; onOpenWidget: () => void }) {
   const t = translations[language];
-  const href = safeUrl(portalConfig.widgetUrl);
-  const content = <>
+  return <button type="button" className="resource-card public-tool widget-public-link" onClick={onOpenWidget}>
     <PortalIcon name="widget" />
     <h3 className="resource-title">{t.widget}</h3>
     <p className="resource-description">{t.widgetDescription}</p>
-    <span className="resource-action">{href ? t.enter : t.pending}</span>
-  </>;
-  return href ? <a className="resource-card public-tool" href={href} rel="noopener noreferrer">{content}</a>
-    : <div className="resource-card public-tool unavailable">{content}</div>;
+    <span className="resource-action">{t.enter}</span>
+  </button>;
 }
 
-export function PublicResources({ language }: { language: Language }) {
+export function PublicResources({ language, onOpenWidget }: { language: Language; onOpenWidget: () => void }) {
   const t = translations[language];
   return <section className="portal-section" aria-labelledby="public-heading">
     <div className="section-heading"><h2 className="dns-section-title" id="public-heading">{t.publicHeading}</h2></div>
     <div className="public-grid">
       <CorporateDesign language={language} />
       <OfficialLogos language={language} />
-      <WidgetLink language={language} />
+      <WidgetLink language={language} onOpenWidget={onOpenWidget} />
     </div>
   </section>;
 }
