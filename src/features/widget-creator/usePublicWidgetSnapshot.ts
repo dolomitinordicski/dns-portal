@@ -53,14 +53,15 @@ export function usePublicWidgetSnapshot(seasonId: string, areaId: string) {
       setState({ status: 'unavailable', snapshot: null, reason: 'No active season in Shared Data' });
       return;
     }
-    if (!db) {
+    const database = db;
+    if (!database) {
       setState({ status: 'unavailable', snapshot: null, reason: 'Firebase public client not configured' });
       return;
     }
     const read = async () => {
       try {
         const id = seasonId + '__' + (canonicalAreaId ?? 'all');
-        const result = await getDocFromServer(doc(db, 'widgetPublicSnapshots', id));
+        const result = await getDocFromServer(doc(database, 'widgetPublicSnapshots', id));
         if (!active) return;
         const record = result.data();
         const value: unknown = record?.snapshot;
