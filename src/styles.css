@@ -1,4 +1,7 @@
-/* DNS Portal base: no duplicate brand tokens or header/footer implementation. */
+/* DNS Portal base: light-only public surface; Foundation still owns colors/components. */
+:root { color-scheme: light; }
+html, body, #app { background: #fff; }
+
 *, *::before, *::after { box-sizing: border-box; }
 html, body { margin: 0; min-height: 100%; }
 body { font-family: var(--font-body); color: var(--color-dns-dark-text); background: var(--color-dns-bg); }

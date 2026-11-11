@@ -6,6 +6,7 @@ export const foundation = initDNSFoundation({
   shellProfile: 'portal',
   footer: true,
   chrome: false,
-  accessibility: { enabled: true, mountSelector: '[data-dns-accessibility-mount]' },
+  // Portal is a public light-only landing page. Accessibility semantics remain; no optional panel/theme runtime.
+  accessibility: false,
 });
 initDNSNavigationStyles();
