@@ -135,9 +135,16 @@ function render() {
     resource(t.area, t.areaDescription, workspaceUrl, t.enter)
   );
   accessCards.querySelectorAll('.resource-card').forEach((card, index) => {
+    const available = card.tagName === 'A';
     card.classList.add('destination', index === 0 ? 'destination-partner' : 'destination-areas');
+    card.querySelector('.resource-action')?.remove();
     card.prepend(icon(index === 0 ? 'partner' : 'areas'));
-    card.append(icon('arrow'));
+    if (available) {
+      card.append(icon('arrow'));
+      (card as HTMLAnchorElement).setAttribute('aria-label', index === 0 ? t.partner : t.area);
+    } else {
+      card.append(element('span', 'destination-status', t.pending));
+    }
   });
   intranet.append(accessCards);
   main.append(intranet);

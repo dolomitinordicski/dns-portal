@@ -62,12 +62,12 @@
   margin-top: -3.25rem;
   z-index: 1;
   padding: clamp(1rem, 2vw, 1.4rem);
-  border: 1px solid color-mix(in srgb, var(--color-dns-surface) 82%, var(--color-dns-border));
+  border: 1px solid color-mix(in srgb, var(--color-dns-surface) 88%, transparent);
   border-radius: calc(var(--dns-card-radius) * 2);
-  background: color-mix(in srgb, var(--color-dns-surface) 91%, var(--color-dns-light));
-  box-shadow: 0 12px 30px color-mix(in srgb, var(--color-dns-deep) 12%, transparent);
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
+  background: color-mix(in srgb, var(--color-dns-surface) 75%, transparent);
+  box-shadow: 0 16px 36px color-mix(in srgb, var(--color-dns-deep) 15%, transparent), inset 0 1px 0 color-mix(in srgb, #fff 95%, transparent);
+  backdrop-filter: blur(22px) saturate(1.13);
+  -webkit-backdrop-filter: blur(22px) saturate(1.13);
 }
 .intranet-label { font: 700 var(--dns-label-size)/1.2 var(--font-display); color: var(--color-dns-mid); text-transform: uppercase; letter-spacing: var(--dns-uppercase-tracking); }
 .intranet .section-heading { text-align: center; margin: .1rem 0 .8rem; }
@@ -136,16 +136,41 @@
   grid-column: 2; margin:0; font: 700 clamp(1.2rem, 2.4vw, 1.65rem)/1.2 var(--font-heading); color: inherit;
 }
 .destination .resource-description { grid-column: 2; margin:0; color: inherit; max-width: 340px; font-size: .9rem; line-height: 1.55; }
-.destination .resource-action {
-  grid-column: 2; align-self: center; justify-self: start; margin-top: .55rem;
-  border-radius: var(--dns-badge-radius); min-height: 40px; padding: .65rem 1rem; font-size: .82rem; font-weight: 700; text-align: center;
+/* Single destination CTA: unframed, thin arrow in the bottom-right. */
+.access-grid .destination .portal-icon:last-child {
+  position: absolute;
+  right: 1.15rem;
+  bottom: 1rem;
+  top: auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  color: inherit;
+  opacity: .95;
+  pointer-events: none;
+  transition: transform var(--dns-motion-fast) var(--dns-motion-easing);
 }
-.access-grid .destination-partner .resource-action { background: #fff; color: var(--color-dns-deep); border-color: transparent; }
-.access-grid .destination-areas .resource-action { background: var(--color-dns-deep); color: #fff; border-color: transparent; }
-.destination .portal-icon:last-child { position: absolute; right: 1rem; top: 1.1rem; color: inherit; opacity: .85; }
-.access-grid .unavailable { opacity: 1; }
-.access-grid .unavailable .resource-action { background: color-mix(in srgb, #fff 90%, transparent); color: var(--color-dns-deep); }
-.access-grid .unavailable .portal-icon:last-child { display: none; }
+.access-grid .destination .portal-icon:last-child svg {
+  width: 30px;
+  height: 30px;
+  stroke-width: 1.35;
+}
+.access-grid .destination:hover .portal-icon:last-child,
+.access-grid .destination:focus-visible .portal-icon:last-child { transform: translateX(6px); }
+.access-grid .destination.unavailable { opacity: 1; }
+.access-grid .destination .destination-status {
+  grid-column: 2;
+  display: inline-block;
+  align-self: end;
+  justify-self: start;
+  margin-top: .65rem;
+  color: inherit;
+  font-size: .75rem;
+  opacity: .8;
+}
+/* The actual destinations remain high-contrast independently of the frosted panel. */
 
 
 .portal-section:not(.intranet) { margin-top: 1.65rem; }
@@ -203,8 +228,8 @@
   .destination .portal-icon:first-child svg {width:26px;height:26px;}
 }
 @media (prefers-reduced-motion:reduce) {
-  .access-grid .destination, .public-grid .public-tool {transition:none;}
-  .access-grid .destination:hover, .public-grid .public-tool:hover {transform:none;}
+  .access-grid .destination, .public-grid .public-tool, .access-grid .destination .portal-icon:last-child {transition:none;}
+  .access-grid .destination:hover, .public-grid .public-tool:hover, .access-grid .destination:hover .portal-icon:last-child {transform:none;}
 }
 
 /* Keyboard focus must remain clearly visible on light and dark destinations. */
