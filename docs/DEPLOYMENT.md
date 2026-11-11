@@ -15,9 +15,8 @@ Do not interpret the selection of a destination as proof of authorisation.
 
 ## Publishing
 
-No automatic deployment is configured. The CI workflow only builds, and does not publish.
-Before a future deploy, transfer the repository from `Bergtripper` to the intended `dolomitinordicski` owner if organisational ownership is required.
-Configure GitHub Pages and the actual verified custom DNS name manually after approval.
+The code belongs to `dolomitinordicski`. CI builds only; publishing is a separate manual GitHub Actions workflow (`DNS Portal — Publish GitHub Pages`). Merging a PR does not publish. Only run this workflow after the explicit release approval and a successful CI build.
+In Settings → Pages choose Source: GitHub Actions. For first release, leave the custom domain empty; verify the generated `github.io/dns-portal/` URL before any domain cutover.
 Do not add a CNAME yet; avoid breaking an existing `partner.dolomitinordicski.com` service.
 Keep the current DNS records unchanged until the target Pages deployment has been verified.
 GitHub Pages is not an authentication server; never store secrets or private member data here.
