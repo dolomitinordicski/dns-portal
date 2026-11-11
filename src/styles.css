@@ -1,31 +1,24 @@
-/* DNS Portal: composition only. All component visuals, corporate colors,
-   typography, radii, header/footer and accessibility come from Foundation 1.4.1. */
+/* Portal-specific layout only. Component visuals and tokens are provided
+   by DNS Foundation 1.4.1. */
 *, *::before, *::after { box-sizing: border-box; }
-html, body { margin: 0; min-height: 100%; }
-body { font-family: var(--font-body); color: var(--color-dns-dark-text); background: var(--color-dns-bg); }
+html, body { min-height: 100%; margin: 0; }
+body { background: var(--color-dns-bg); color: var(--color-dns-dark-text); font-family: var(--font-body); }
 #app { min-height: 100vh; display: flex; flex-direction: column; }
 
-.main {
-  flex: 1;
-  width: min(100%, var(--dns-shell-max-width));
-  margin-inline: auto;
-  padding: 3rem var(--dns-shell-padding-x);
-}
-.intro { margin-bottom: 2rem; }
-.intro h1 { font-family: var(--font-heading); color: var(--color-dns-deep); margin: .4rem 0; }
+main[data-dns-shell-main] { flex: 1; padding-block: 2.5rem 4rem; }
+.intro { margin: 0 0 1.8rem; }
+.intro h1 { margin: .3rem 0; font: 700 clamp(1.5rem, 3vw, 2rem)/1.3 var(--font-heading); color: var(--color-dns-deep); }
 .intro p:last-child, .section-description, .resource-description, .notice { color: var(--color-dns-muted); }
-
-.portal-section { margin-block: 2rem; }
+.portal-section + .portal-section { margin-top: 2.75rem; }
 .section-heading { margin-bottom: 1rem; }
 .section-description { margin: .35rem 0 0; }
-.cards, .public-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: var(--dns-card-gap);
-}
+.cards, .public-grid { display: grid; gap: var(--dns-card-gap); }
+.access-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.public-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); align-items: start; }
+
 .resource-card {
-  display: flex;
   min-width: 0;
+  display: flex;
   flex-direction: column;
   align-items: flex-start;
   gap: var(--dns-compact-gap);
@@ -34,36 +27,39 @@ body { font-family: var(--font-body); color: var(--color-dns-dark-text); backgro
   color: inherit;
   text-decoration: none;
 }
-.resource-title { color: var(--color-dns-deep); margin: 0; }
+.resource-title { color: var(--color-dns-deep); margin: 0; font-size: 1rem; }
 .resource-description { margin: 0; line-height: 1.5; }
 .resource-action { margin-top: auto; }
-.destination { min-height: 175px; }
-.unavailable { opacity: .7; }
-.notice { margin: 1.25rem 0 0; }
+.destination { min-height: 140px; }
+.unavailable { opacity: .72; }
+.notice { margin: .75rem 0 0; font-size: .85rem; }
 
-.palette { display: flex; flex-wrap: wrap; gap: var(--dns-compact-gap); }
-.color-sample { display: inline-flex; align-items: center; gap: .45rem; font-size: .8rem; }
-.color-swatch {
-  display: inline-block;
-  inline-size: 1.15rem;
-  block-size: 1.15rem;
-  border: 1px solid var(--color-dns-border);
-  border-radius: var(--dns-control-radius);
+.corporate-details, .guidelines { width: 100%; }
+.corporate-details { margin-top: .4rem; }
+.corporate-details summary, .brand-guideline summary {
+  cursor: pointer; color: var(--color-dns-deep); font-weight: 600;
 }
-.guidelines { display: grid; width: 100%; gap: var(--dns-compact-gap); }
-.brand-guideline { padding-block: .6rem; border-top: 1px solid var(--color-dns-border); }
-.brand-guideline summary { cursor: pointer; color: var(--color-dns-deep); font-weight: 600; }
-.brand-guideline p { margin-block: .6rem; }
-.brand-guideline ul { margin-block: .4rem; padding-inline-start: 1.2rem; color: var(--color-dns-muted); }
+.corporate-details[open] > summary { margin-bottom: .85rem; }
+.palette { display: grid; gap: var(--dns-compact-gap); }
+.color-sample { display: flex; align-items: center; gap: .4rem; font-size: .8rem; }
+.color-swatch { display: block; flex: none; width: 1.2rem; height: 1.2rem; border: 1px solid var(--color-dns-border); border-radius: var(--dns-control-radius); }
+.guidelines { margin-top: .85rem; }
+.brand-guideline { border-top: 1px solid var(--color-dns-border); padding: .6rem 0; }
+.brand-guideline p { margin: .5rem 0; }
+.brand-guideline ul { padding-left: 1.2rem; color: var(--color-dns-muted); }
+.logo-resources > .resource-card { width: 100%; padding: .55rem 0; border: 0; border-top: 1px solid var(--color-dns-border); box-shadow: none; }
 
-/* The one Portal-specific effect explicitly approved: interactive cards lift on hover. */
+/* Approved Portal-only hover: Foundation owns the rest of each card. */
 @media (hover: hover) and (pointer: fine) {
   a.resource-card { transition: transform var(--dns-motion-fast) var(--dns-motion-easing); }
   a.resource-card:hover { transform: translateY(-3px); }
 }
+@media (max-width: 1023px) {
+  .public-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
 @media (max-width: 767px) {
-  .main { padding-inline: var(--dns-shell-padding-x-mobile); }
-  .cards, .public-grid { grid-template-columns: 1fr; }
+  .access-grid, .public-grid { grid-template-columns: 1fr; }
+  main[data-dns-shell-main] { padding-block: 1.75rem 3rem; }
 }
 @media (prefers-reduced-motion: reduce) {
   a.resource-card { transition: none; }
