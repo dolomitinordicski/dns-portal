@@ -37,7 +37,7 @@ export function PublishedWidgetData({ lang, snapshot, regionName, includeTrails,
         <img src={DNS_FOOTER_GRAPHIC.url} alt="" aria-hidden="true" className="absolute bottom-0 right-0 w-4/5 max-w-xl pointer-events-none opacity-25" />
         <p className={compact ? "relative text-[10px] font-bold uppercase tracking-wider opacity-90" : "relative text-xs font-bold uppercase tracking-wider opacity-90"}>{tr('Dolomiti NordicSki · Widget-Vorschau', 'Dolomiti NordicSki · Anteprima widget', 'Dolomiti NordicSki · Widget preview')}</p>
         <div className={compact ? "relative flex flex-wrap items-center gap-3" : "relative flex flex-wrap items-center gap-4"}>
-          {areaId === "all" && <img src={DNS_SHARED_WEB_LOGO_URL} alt="Dolomiti NordicSki" className="max-h-16 max-w-36 object-contain" />}
+          {areaId === "all" && <img src={portalConfig.logoWebUrl} alt="Dolomiti NordicSki" className="max-h-16 max-w-36 object-contain" />}
           {regionLogos.logos.length > 0 && (
             <div aria-label={tr('Gebietslogos', 'Loghi area', 'Area logos')}
               className="inline-flex max-w-full flex-wrap items-center justify-center gap-2 overflow-hidden rounded-xl border px-3 py-2 backdrop-blur-md"
@@ -52,7 +52,7 @@ export function PublishedWidgetData({ lang, snapshot, regionName, includeTrails,
               ))}
             </div>
           )}
-          {regionLogos.status === 'ready' && regionLogos.logos.length === 0 && snapshot?.logo?.url?.startsWith('https://') && snapshot.logo.url !== DNS_SHARED_WEB_LOGO_URL && <img src={snapshot.logo.url} alt={snapshot.logo.alt[lang]} className="max-h-16 max-w-36 object-contain" />}
+          {regionLogos.status === 'ready' && regionLogos.logos.length === 0 && snapshot?.logo?.url?.startsWith('https://') && snapshot.logo.url !== portalConfig.logoWebUrl && <img src={snapshot.logo.url} alt={snapshot.logo.alt[lang]} className="max-h-16 max-w-36 object-contain" />}
           <div className="min-w-0 flex-1">
             <h3 className={compact ? "text-lg sm:text-xl font-extrabold leading-tight tracking-tight" : "text-2xl sm:text-3xl font-extrabold leading-tight tracking-tight"}>{regionName}</h3>
             <p className="text-xs mt-1 opacity-80">{snapshot ? tr('Aktueller Loipenstatus', 'Stato piste aggiornato', 'Current trail status') : tr('Noch keine Live-Daten verfügbar', 'Dati live non ancora disponibili', 'Live data not yet available')}</p>
@@ -77,7 +77,7 @@ export function PublishedWidgetData({ lang, snapshot, regionName, includeTrails,
           {priceItems.length > 0 ? <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">{priceItems.map(p => <div key={p.productCode} className="rounded-md p-4" style={{ background: c.background }}><p className="text-xs">{p.productCode}</p><p className="text-lg font-bold" style={{ color: c.deep }}>{new Intl.NumberFormat(lang, { style: 'currency', currency: p.currency }).format(p.amount)}</p></div>)}</div> : <p className="text-sm">{tr('Preise nicht verfügbar', 'Prezzi non disponibili', 'Prices unavailable')}</p>}
         </div>}
       </div>
-      <footer className={compact ? "px-5 py-2 flex flex-wrap items-center justify-between gap-3 text-[10px] font-semibold" : "px-5 sm:px-7 py-3 flex flex-wrap items-center justify-between gap-4 text-xs font-semibold"} style={{ borderTop: '1px solid ' + c.border, color: c.mid }}><span>Powered by Dolomiti NordicSki</span>{areaId !== "all" && <img src={DNS_SHARED_WEB_LOGO_URL} alt="Dolomiti NordicSki" className="ml-auto max-h-12 max-w-32 object-contain" />}</footer>
+      <footer className={compact ? "px-5 py-2 flex flex-wrap items-center justify-between gap-3 text-[10px] font-semibold" : "px-5 sm:px-7 py-3 flex flex-wrap items-center justify-between gap-4 text-xs font-semibold"} style={{ borderTop: '1px solid ' + c.border, color: c.mid }}><span>Powered by Dolomiti NordicSki</span>{areaId !== "all" && <img src={portalConfig.logoWebUrl} alt="Dolomiti NordicSki" className="ml-auto max-h-12 max-w-32 object-contain" />}</footer>
     </section>
   );
 }
