@@ -94,12 +94,35 @@ function render() {
   intro.append(element('p', 'dns-kicker', t.tagline), element('h1', undefined, t.heading), element('p', undefined, t.description));
   main.append(intro);
 
+
+  // Intranet remains a selector only: authorization belongs to the destination.
+  const intranet = element('section', 'portal-section intranet');
+  intranet.setAttribute('aria-labelledby', 'intranet-heading');
+  const intranetHeading = sectionTitle(t.intranet, `${t.who} · ${t.intranetDescription}`);
+  intranetHeading.querySelector('h2')!.id = 'intranet-heading';
+  intranet.append(intranetHeading);
+  const accessCards = element('div', 'cards access-grid');
+  accessCards.append(
+    resource(t.partner, t.partnerDescription, partnerHubUrl, t.enter),
+    resource(t.area, t.areaDescription, workspaceUrl, t.enter)
+  );
+  accessCards.querySelectorAll('.resource-card').forEach(card => card.classList.add('destination'));
+  intranet.append(accessCards, element('p', 'notice', t.notice));
+  main.append(intranet);
+
+  // Public resources reuse the actual Foundation palette and official assets.
+  // Keep detailed guidelines on demand, not expanded on the landing screen.
   const publicSection = element('section', 'portal-section');
-  publicSection.setAttribute('aria-label', t.publicHeading);
-  publicSection.append(sectionTitle(t.publicHeading, t.publicDescription));
+  publicSection.setAttribute('aria-labelledby', 'public-heading');
+  const publicHeading = sectionTitle(t.publicHeading, t.publicDescription);
+  publicHeading.querySelector('h2')!.id = 'public-heading';
+  publicSection.append(publicHeading);
   const publicGrid = element('div', 'public-grid');
-  const brandCard = element('div', 'dns-card resource-card');
-  brandCard.append(element('h3', 'resource-title', t.brand), element('p', 'resource-description', t.brandDescription));
+
+  const corporate = element('div', 'dns-card resource-card');
+  corporate.append(element('h3', 'resource-title', t.brand), element('p', 'resource-description', t.brandDescription));
+  const corporateDetails = element('details', 'corporate-details');
+  corporateDetails.append(element('summary', undefined, t.brand));
   const palette = element('div', 'palette');
   Object.values(DNS_DESIGN_SYSTEM.corporateColors).forEach(color => {
     const item = element('div', 'color-sample');
@@ -109,12 +132,12 @@ function render() {
     item.append(swatch, element('span', undefined, `${color.name} · ${color.hex}`));
     palette.append(item);
   });
-  brandCard.append(palette);
+  corporateDetails.append(palette);
   const guidelines = element('div', 'guidelines');
   BRAND_GUIDELINES.forEach(guideline => {
     const details = element('details', 'brand-guideline');
-    const summary = element('summary', undefined, guideline.title[language]);
-    details.append(summary, element('p', 'resource-description', guideline.description[language]));
+    details.append(element('summary', undefined, guideline.title[language]));
+    details.append(element('p', 'resource-description', guideline.description[language]));
     const allowed = element('ul');
     guideline.dos.forEach(item => allowed.append(element('li', undefined, '✓ ' + item[language])));
     const disallowed = element('ul');
@@ -122,27 +145,20 @@ function render() {
     details.append(allowed, disallowed);
     guidelines.append(details);
   });
-  brandCard.append(guidelines);
-  publicGrid.append(
-    brandCard,
+  corporateDetails.append(guidelines);
+  corporate.append(corporateDetails);
+
+  const logos = element('div', 'dns-card resource-card');
+  logos.append(element('h3', 'resource-title', t.logoWeb.replace(' · Web', '').replace(' · Stampa', '').replace(' · Druck', '').replace(' · Print', '')));
+  logos.append(
     resource(t.logoWeb, 'PNG', logoWebUrl, t.download),
-    resource(t.logoPrint, 'PNG', logoPrintUrl, t.download),
-    resource(t.widget, t.widgetDescription, widgetUrl, t.enter)
+    resource(t.logoPrint, 'PNG', logoPrintUrl, t.download)
   );
+  logos.classList.add('logo-resources');
+
+  publicGrid.append(corporate, logos, resource(t.widget, t.widgetDescription, widgetUrl, t.enter));
   publicSection.append(publicGrid);
   main.append(publicSection);
-
-  const intranet = element('section', 'portal-section intranet');
-  intranet.setAttribute('aria-label', t.intranet);
-  intranet.append(sectionTitle(t.intranet, `${t.who} · ${t.intranetDescription}`));
-  const cards = element('div', 'cards');
-  cards.append(
-    resource(t.partner, t.partnerDescription, partnerHubUrl, t.enter),
-    resource(t.area, t.areaDescription, workspaceUrl, t.enter)
-  );
-  cards.querySelectorAll('.resource-card').forEach(card => card.classList.add('destination'));
-  intranet.append(cards, element('p', 'notice', t.notice));
-  main.append(intranet);
 
   const footer = element('footer');
   footer.dataset.dnsToolFooter = '';
@@ -153,5 +169,7 @@ function render() {
   footer.querySelector('span')!.textContent = t.footer;
   app!.append(header, main, footer);
   foundation.refresh();
+  // Foundation 1.4.1 localizes its controls in DE/IT; Portal additionally supports EN.
+  document.documentElement.lang = language;
 }
 render();
