@@ -19,6 +19,11 @@ body { font-family: var(--font-body); background: var(--color-dns-bg); color: va
 .resource-description { font-size: .9rem; margin: 0; line-height: 1.5; color: var(--color-dns-muted); }
 .resource-action { margin-top: auto; }
 .palette { display: flex; flex-wrap: wrap; gap: .65rem; }
+.guidelines { display: grid; gap: .45rem; width: 100%; }
+.brand-guideline { border-top: 1px solid var(--color-dns-border); padding: .6rem 0; font-size: .8rem; }
+.brand-guideline summary { color: var(--color-dns-deep); cursor: pointer; font-weight: 600; }
+.brand-guideline p { margin: .6rem 0; }
+.brand-guideline ul { padding-inline-start: 1rem; margin: .45rem 0; color: var(--color-dns-muted); }
 .color-sample { display: flex; align-items: center; gap: .4rem; font-size: .75rem; }
 .color-swatch { display: inline-block; height: 1.15rem; width: 1.15rem; border-radius: var(--dns-control-radius); border: 1px solid var(--color-dns-border); }
 a.resource-card:hover { transform: translateY(-2px); }
