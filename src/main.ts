@@ -52,7 +52,8 @@ function element<K extends keyof HTMLElementTagNameMap>(tag: K, className?: stri
 }
 function sectionTitle(title: string, subtitle: string) {
   const wrapper = element('div', 'section-heading');
-  wrapper.append(element('h2', 'dns-section-title', title), element('p', 'section-description', subtitle));
+  wrapper.append(element('h2', 'dns-section-title', title));
+  if (subtitle) wrapper.append(element('p', 'section-description', subtitle));
   return wrapper;
 }
 function resource(title: string, description: string, url: string, action: string) {
@@ -68,7 +69,7 @@ function resource(title: string, description: string, url: string, action: strin
   card.append(cta);
   return card;
 }
-function icon(kind: 'partner' | 'areas' | 'brand' | 'logos' | 'widget' | 'arrow' | 'info') {
+function icon(kind: 'partner' | 'areas' | 'brand' | 'logos' | 'widget' | 'arrow') {
   const shapes: Record<typeof kind, string> = {
     partner: '<path d="m2 9 4-4 4 2 2-1 4-1 6 4-5 6-3-2-2 2-3-3-2 1-5-4Z"/><path d="m9 7 3 3 3-1 4 4M8 13l3 3m3-3 3 2"/>',
     areas: '<path d="m3 20 5-14 5 8 3-5 5 11H3Z"/><path d="M8 6V2m0 1h5l-2 2 2 2H8"/>',
@@ -76,7 +77,6 @@ function icon(kind: 'partner' | 'areas' | 'brand' | 'logos' | 'widget' | 'arrow'
     logos: '<rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="16.5" cy="9" r="1.5"/><path d="m4 18 5-5 3 3 3-3 5 5"/>',
     widget: '<path d="m8 7-5 5 5 5m8-10 5 5-5 5M14 4l-4 16"/>',
     arrow: '<path d="M5 12h14m-6-6 6 6-6 6"/>',
-    info: '<circle cx="12" cy="12" r="9"/><path d="M12 11v6m0-10v1"/>',
   };
   const span = element('span', 'portal-icon');
   span.innerHTML = '<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + shapes[kind] + '</svg>';
@@ -90,7 +90,7 @@ function render() {
 
   const header = element('header', 'dns-foundation-header');
   header.dataset.dnsToolHeader = '';
-  header.innerHTML = '<div class="dns-tool-header-shell"><div class="dns-tool-header-brand"><img class="dns-tool-header-logo" alt="Dolomiti NordicSki"><div class="dns-tool-header-identity"><div class="dns-tool-header-title"><strong>DNS</strong> <span>PORTAL</span></div><div class="dns-tool-header-subtitle">DNS Ecosystem</div></div></div><div class="dns-tool-header-actions"><div data-dns-accessibility-mount></div><nav class="dns-tool-header-language" aria-label="Language"></nav></div></div>';
+  header.innerHTML = '<div class="dns-tool-header-shell"><div class="dns-tool-header-brand"><img class="dns-tool-header-logo" alt="Dolomiti NordicSki"><div class="dns-tool-header-identity"><div class="dns-tool-header-title"><strong>DNS</strong> <span>PORTAL</span></div></div></div><div class="dns-tool-header-actions"><div data-dns-accessibility-mount></div><nav class="dns-tool-header-language" aria-label="Language"></nav></div></div>';
   (header.querySelector('img') as HTMLImageElement).src = logoWebUrl;
   const langNav = header.querySelector('nav')!;
   (['it', 'de', 'en'] as Language[]).forEach(lang => {
@@ -111,10 +111,7 @@ function render() {
   const hero = element('section', 'portal-hero');
   if (safeUrl(heroImageUrl)) hero.style.setProperty('--portal-hero-image', 'url("' + safeUrl(heroImageUrl) + '")');
   const intro = element('div', 'intro');
-  intro.append(element('p', 'dns-kicker', t.tagline), element('h1', undefined, 'DNS Portal'), element('p', undefined, t.description));
-  const heroSignals = element('div', 'hero-signals');
-  heroSignals.append(icon('partner'), element('span', undefined, t.intranet), icon('brand'), element('span', undefined, t.brand), icon('widget'), element('span', undefined, t.widget));
-  intro.append(heroSignals);
+  intro.append(element('h1', undefined, t.heading), element('p', undefined, t.description));
   hero.append(intro);
   main.append(hero);
 
@@ -122,7 +119,7 @@ function render() {
   // Intranet remains a selector only: authorization belongs to the destination.
   const intranet = element('section', 'portal-section intranet');
   intranet.setAttribute('aria-labelledby', 'intranet-heading');
-  const intranetHeading = sectionTitle(t.intranet, `${t.who} · ${t.intranetDescription}`);
+  const intranetHeading = sectionTitle(t.who, '');
   intranetHeading.querySelector('h2')!.id = 'intranet-heading';
   intranet.append(element('div', 'intranet-label', t.intranet), intranetHeading);
   const accessCards = element('div', 'cards access-grid');
@@ -135,9 +132,7 @@ function render() {
     card.prepend(icon(index === 0 ? 'partner' : 'areas'));
     card.append(icon('arrow'));
   });
-  const authNote = element('p', 'notice');
-  authNote.append(icon('info'), document.createTextNode(t.notice));
-  intranet.append(accessCards, authNote);
+  intranet.append(accessCards);
   main.append(intranet);
 
   // Public resources reuse the actual Foundation palette and official assets.
@@ -181,7 +176,7 @@ function render() {
   corporate.classList.add('public-tool');
 
   const logos = element('div', 'dns-card resource-card');
-  logos.append(element('h3', 'resource-title', t.logoWeb.replace(' · Web', '').replace(' · Stampa', '').replace(' · Druck', '').replace(' · Print', '')));
+  logos.append(element('h3', 'resource-title', t.logos));
   logos.append(
     resource(t.logoWeb, 'PNG', logoWebUrl, t.download),
     resource(t.logoPrint, 'PNG', logoPrintUrl, t.download)
