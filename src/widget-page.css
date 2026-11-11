@@ -3,3 +3,15 @@
 .widget-back-link { background: none; border: none; padding: .5rem 0; cursor: pointer; color: var(--color-dns-deep); font: 600 .9rem var(--font-body); }
 .widget-back-link:hover { text-decoration: underline; }
 .widget-back-link:focus-visible { outline: 3px solid var(--color-dns-mid); outline-offset: 3px; }
+
+/* Embed only the Creator content; Portal header, footer and back link stay local. */
+.widget-creator-frame {
+  display: block;
+  width: 100%;
+  height: max(1050px, 100vh);
+  border: 0;
+  background: #fff;
+}
+@media (max-width: 767px) {
+  .widget-creator-frame { height: 1450px; }
+}
