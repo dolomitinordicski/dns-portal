@@ -20,7 +20,8 @@ const workspaceUrl = import.meta.env.VITE_DNS_WORKSPACE_URL || 'https://dolomiti
 const partnerHubUrl = import.meta.env.VITE_DNS_PARTNER_HUB_URL || '';
 // Enable this only when the public Widget Creator has a verified direct URL.
 const widgetUrl = import.meta.env.VITE_DNS_PUBLIC_WIDGET_URL || '';
-const heroImageUrl = import.meta.env.VITE_DNS_PORTAL_HERO_IMAGE_URL || '';
+// Canonical photo uploaded by DNS to this repository (WebP bytes; original filename preserved).
+const heroImageUrl = import.meta.env.VITE_DNS_PORTAL_HERO_IMAGE_URL || 'https://raw.githubusercontent.com/dolomitinordicski/dns-portal/main/sources/DN190D~1.WEB';
 const safeUrl = (raw: string) => {
   try { const url = new URL(raw); return url.protocol === 'https:' ? url.href : ''; }
   catch { return ''; }
