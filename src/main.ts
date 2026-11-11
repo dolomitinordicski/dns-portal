@@ -8,6 +8,7 @@ import { DNS_DESIGN_SYSTEM } from '@dolomitinordicski/dns-shared-data/design-sys
 import { initDNSNavigationStyles } from '@dolomitinordicski/dns-shared-data/ui/navigation';
 import { BRAND_GUIDELINES } from './content/brand-guidelines';
 import './styles.css';
+import './portal-visual.css';
 
 import { translations, type Language } from './content/translations';
 
@@ -19,6 +20,7 @@ const workspaceUrl = import.meta.env.VITE_DNS_WORKSPACE_URL || 'https://dolomiti
 const partnerHubUrl = import.meta.env.VITE_DNS_PARTNER_HUB_URL || '';
 // Enable this only when the public Widget Creator has a verified direct URL.
 const widgetUrl = import.meta.env.VITE_DNS_PUBLIC_WIDGET_URL || '';
+const heroImageUrl = import.meta.env.VITE_DNS_PORTAL_HERO_IMAGE_URL || '';
 const safeUrl = (raw: string) => {
   try { const url = new URL(raw); return url.protocol === 'https:' ? url.href : ''; }
   catch { return ''; }
@@ -65,6 +67,21 @@ function resource(title: string, description: string, url: string, action: strin
   card.append(cta);
   return card;
 }
+function icon(kind: 'partner' | 'areas' | 'brand' | 'logos' | 'widget' | 'arrow' | 'info') {
+  const shapes: Record<typeof kind, string> = {
+    partner: '<path d="m2 9 4-4 4 2 2-1 4-1 6 4-5 6-3-2-2 2-3-3-2 1-5-4Z"/><path d="m9 7 3 3 3-1 4 4M8 13l3 3m3-3 3 2"/>',
+    areas: '<path d="m3 20 5-14 5 8 3-5 5 11H3Z"/><path d="M8 6V2m0 1h5l-2 2 2 2H8"/>',
+    brand: '<path d="M4 4.5c3-1 5 0 8 2 3-2 5-3 8-2v15c-3-1-5 0-8 2-3-2-5-3-8-2v-15Z"/><path d="M12 6.5v15"/>',
+    logos: '<rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="16.5" cy="9" r="1.5"/><path d="m4 18 5-5 3 3 3-3 5 5"/>',
+    widget: '<path d="m8 7-5 5 5 5m8-10 5 5-5 5M14 4l-4 16"/>',
+    arrow: '<path d="M5 12h14m-6-6 6 6-6 6"/>',
+    info: '<circle cx="12" cy="12" r="9"/><path d="M12 11v6m0-10v1"/>',
+  };
+  const span = element('span', 'portal-icon');
+  span.innerHTML = '<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + shapes[kind] + '</svg>';
+  span.setAttribute('aria-hidden', 'true');
+  return span;
+}
 function render() {
   const t = translations[language];
   app!.replaceChildren();
@@ -90,9 +107,15 @@ function render() {
 
   const main = element('main', 'main');
   main.dataset.dnsShellMain = '';
-  const intro = element('section', 'intro');
-  intro.append(element('p', 'dns-kicker', t.tagline), element('h1', undefined, t.heading), element('p', undefined, t.description));
-  main.append(intro);
+  const hero = element('section', 'portal-hero');
+  if (safeUrl(heroImageUrl)) hero.style.setProperty('--portal-hero-image', 'url("' + safeUrl(heroImageUrl) + '")');
+  const intro = element('div', 'intro');
+  intro.append(element('p', 'dns-kicker', t.tagline), element('h1', undefined, 'DNS Portal'), element('p', undefined, t.description));
+  const heroSignals = element('div', 'hero-signals');
+  heroSignals.append(icon('partner'), element('span', undefined, t.intranet), icon('brand'), element('span', undefined, t.brand), icon('widget'), element('span', undefined, t.widget));
+  intro.append(heroSignals);
+  hero.append(intro);
+  main.append(hero);
 
 
   // Intranet remains a selector only: authorization belongs to the destination.
@@ -100,14 +123,20 @@ function render() {
   intranet.setAttribute('aria-labelledby', 'intranet-heading');
   const intranetHeading = sectionTitle(t.intranet, `${t.who} · ${t.intranetDescription}`);
   intranetHeading.querySelector('h2')!.id = 'intranet-heading';
-  intranet.append(intranetHeading);
+  intranet.append(element('div', 'intranet-label', t.intranet), intranetHeading);
   const accessCards = element('div', 'cards access-grid');
   accessCards.append(
     resource(t.partner, t.partnerDescription, partnerHubUrl, t.enter),
     resource(t.area, t.areaDescription, workspaceUrl, t.enter)
   );
-  accessCards.querySelectorAll('.resource-card').forEach(card => card.classList.add('destination'));
-  intranet.append(accessCards, element('p', 'notice', t.notice));
+  accessCards.querySelectorAll('.resource-card').forEach((card, index) => {
+    card.classList.add('destination', index === 0 ? 'destination-partner' : 'destination-areas');
+    card.prepend(icon(index === 0 ? 'partner' : 'areas'));
+    card.append(icon('arrow'));
+  });
+  const authNote = element('p', 'notice');
+  authNote.append(icon('info'), document.createTextNode(t.notice));
+  intranet.append(accessCards, authNote);
   main.append(intranet);
 
   // Public resources reuse the actual Foundation palette and official assets.
@@ -147,6 +176,8 @@ function render() {
   });
   corporateDetails.append(guidelines);
   corporate.append(corporateDetails);
+  corporate.prepend(icon('brand'));
+  corporate.classList.add('public-tool');
 
   const logos = element('div', 'dns-card resource-card');
   logos.append(element('h3', 'resource-title', t.logoWeb.replace(' · Web', '').replace(' · Stampa', '').replace(' · Druck', '').replace(' · Print', '')));
@@ -154,9 +185,13 @@ function render() {
     resource(t.logoWeb, 'PNG', logoWebUrl, t.download),
     resource(t.logoPrint, 'PNG', logoPrintUrl, t.download)
   );
-  logos.classList.add('logo-resources');
+  logos.classList.add('logo-resources', 'public-tool');
+  logos.prepend(icon('logos'));
+  const widgetCard = resource(t.widget, t.widgetDescription, widgetUrl, t.enter);
+  widgetCard.classList.add('public-tool');
+  widgetCard.prepend(icon('widget'));
 
-  publicGrid.append(corporate, logos, resource(t.widget, t.widgetDescription, widgetUrl, t.enter));
+  publicGrid.append(corporate, logos, widgetCard);
   publicSection.append(publicGrid);
   main.append(publicSection);
 

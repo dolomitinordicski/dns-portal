@@ -1,0 +1,168 @@
+/* Visual concept 03 — DNS Portal ONLY.
+   Foundation 1.4.1 remains the authority for logo, header, footer,
+   typography, control primitives, accessibility and the corporate palette. */
+:root {
+  --portal-ice: var(--color-dns-light);
+  --portal-petrol: var(--color-dns-deep);
+  --portal-mid: var(--color-dns-mid);
+  --portal-ease: var(--dns-motion-easing);
+}
+.portal-hero {
+  position: relative;
+  isolation: isolate;
+  min-height: 280px;
+  padding: clamp(1.5rem, 4vw, 3rem);
+  overflow: hidden;
+  border-radius: 0 0 var(--dns-card-radius) var(--dns-card-radius);
+  background:
+    linear-gradient(90deg, var(--color-dns-bg) 4%, color-mix(in srgb, var(--color-dns-bg) 94%, transparent) 45%, color-mix(in srgb, var(--portal-ice) 28%, transparent) 100%),
+    var(--portal-hero-image, linear-gradient(120deg, var(--color-dns-bg), var(--portal-ice)));
+  background-size: cover;
+  background-position: center;
+}
+.portal-hero::before, .portal-hero::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  pointer-events: none;
+  width: 110%;
+  height: 46%;
+  left: -6%;
+  bottom: -33%;
+  border-radius: 48% 52% 0 0;
+  background: color-mix(in srgb, var(--portal-ice) 36%, transparent);
+  transform: rotate(-3deg);
+}
+.portal-hero::after { bottom: -39%; left: 24%; opacity: .6; transform: rotate(3deg); }
+.intro { position: relative; max-width: 660px; }
+.intro .dns-kicker { margin: 0; }
+.intro h1 {
+  font-family: var(--font-heading);
+  color: var(--color-dns-deep);
+  font-size: clamp(2.15rem, 5vw, 3.3rem);
+  line-height: 1.15;
+  margin: .45rem 0 .65rem;
+  letter-spacing: -.025em;
+}
+.intro > p:last-of-type { color: var(--color-dns-dark-text); font-size: clamp(.95rem, 1.6vw, 1.15rem); line-height: 1.5; }
+.hero-signals { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem 1rem; max-width: 650px; margin-top: 1.5rem; color: var(--color-dns-deep); font-size: .8rem; }
+.hero-signals .portal-icon { display: inline-flex; width: 23px; height: 23px; margin-right: -.6rem; color: var(--color-dns-mid); }
+.hero-signals svg { width: 23px; height: 23px; }
+
+.portal-section { margin-top: 1.6rem; }
+.intranet {
+  position: relative;
+  margin-top: -1rem;
+  z-index: 1;
+  padding: clamp(1.1rem, 3vw, 2rem);
+  border: 1px solid color-mix(in srgb, var(--color-dns-surface) 82%, var(--color-dns-border));
+  border-radius: calc(var(--dns-card-radius) * 2);
+  background: color-mix(in srgb, var(--color-dns-surface) 84%, var(--color-dns-light));
+  box-shadow: 0 12px 30px color-mix(in srgb, var(--color-dns-deep) 12%, transparent);
+  backdrop-filter: blur(12px);
+}
+.intranet-label { font: 700 var(--dns-label-size)/1.2 var(--font-display); color: var(--color-dns-mid); text-transform: uppercase; letter-spacing: var(--dns-uppercase-tracking); }
+.intranet .section-heading { text-align: center; margin: .4rem 0 1.15rem; }
+.intranet .section-heading h2 { color: var(--color-dns-deep); font: 700 clamp(1.5rem, 3.3vw, 2rem)/1.2 var(--font-heading); text-transform: none; letter-spacing: -.01em; }
+.intranet .section-description { color: var(--color-dns-muted); margin: .5rem 0 0; font-size: .85rem; }
+.access-grid { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: var(--dns-card-gap); }
+.access-grid .resource-card {
+  position: relative;
+  display: grid;
+  grid-template-columns: 66px 1fr;
+  grid-template-rows: auto auto 1fr;
+  gap: .35rem 1rem;
+  min-height: 180px;
+  padding: 1.35rem;
+  border-radius: calc(var(--dns-card-radius) * 1.5);
+  border: 1px solid color-mix(in srgb, var(--color-dns-light) 55%, transparent);
+  overflow: hidden;
+  isolation: isolate;
+  box-shadow: var(--dns-card-shadow);
+}
+.access-grid .resource-card::after {
+  content:""; pointer-events:none; position:absolute; right:-8%; bottom:-62%;
+  width:80%; height:100%; background: color-mix(in srgb, var(--color-dns-light) 24%, transparent);
+  transform: rotate(-18deg); border-radius: 45%; z-index:-1;
+}
+.destination-partner {
+  color: #fff;
+  background: linear-gradient(126deg, var(--color-dns-deep), var(--color-dns-mid));
+}
+.destination-areas {
+  color: var(--color-dns-primary-dark);
+  background: linear-gradient(120deg, var(--color-dns-light), color-mix(in srgb, var(--color-dns-light) 72%, var(--color-dns-surface)));
+}
+.destination .portal-icon:first-child {
+  grid-row: 1 / 4; grid-column: 1;
+  width: 58px; height: 58px; display:grid; place-items:center;
+  border-radius: var(--dns-card-radius);
+  background: color-mix(in srgb, var(--color-dns-surface) 86%, transparent);
+  color: var(--color-dns-deep);
+}
+.destination .portal-icon:first-child svg { width: 33px; height: 33px; }
+.destination .resource-title {
+  grid-column: 2; margin:0; font: 700 clamp(1.2rem, 2.4vw, 1.65rem)/1.2 var(--font-heading); color: inherit;
+}
+.destination .resource-description { grid-column: 2; margin:0; color: inherit; opacity: .92; max-width: 340px; }
+.destination .resource-action {
+  grid-column: 2; align-self: end; justify-self: start; margin-top: .7rem;
+  border-radius: var(--dns-badge-radius); min-height: 34px; padding: .5rem .95rem; font-size: .8rem;
+}
+.destination-partner .resource-action { background: var(--color-dns-surface); color: var(--color-dns-primary-dark); }
+.destination-areas .resource-action { background: var(--color-dns-primary-dark); color: #fff; }
+.destination .portal-icon:last-child { position: absolute; right: 1rem; top: 1.1rem; color: inherit; opacity: .9; }
+.intranet .notice { margin: 1rem auto 0; display:flex; align-items:center; justify-content:center; gap:.45rem; color: var(--color-dns-muted); font-size:.77rem; text-align:center; }
+.intranet .notice .portal-icon svg { width: 18px; height: 18px; }
+
+.portal-section:not(.intranet) { margin-top: 2rem; }
+.portal-section:not(.intranet) .section-heading { margin-bottom: 1rem; }
+.portal-section:not(.intranet) .section-heading h2 { font: 700 clamp(1.15rem,2vw,1.45rem)/1.3 var(--font-heading); color: var(--color-dns-deep); }
+.portal-section:not(.intranet) .section-description { margin: .3rem 0; }
+.public-grid { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: var(--dns-card-gap); align-items:start; }
+.public-tool {
+  position: relative;
+  min-width:0;
+  display:grid;
+  grid-template-columns: 50px minmax(0,1fr);
+  column-gap:.75rem;
+  align-content:start;
+  padding: 1rem;
+  border:1px solid var(--color-dns-border);
+  border-radius: var(--dns-card-radius);
+  background:var(--color-dns-surface);
+  box-shadow:var(--dns-card-shadow);
+}
+.public-tool > .portal-icon:first-child {
+  display:grid; place-items:center; grid-column:1; grid-row:1 / 4;
+  width:46px; height:46px;
+  border-radius:var(--dns-card-radius);
+  background: color-mix(in srgb, var(--color-dns-light) 37%, var(--color-dns-surface));
+  color:var(--color-dns-deep);
+}
+.public-tool .resource-title { grid-column:2; margin:0; color:var(--color-dns-deep); font:700 .95rem/1.25 var(--font-heading); }
+.public-tool .resource-description { grid-column:2; margin:.25rem 0; font-size:.8rem; }
+.public-tool .corporate-details { grid-column:1 / -1; margin-top:.75rem; }
+.public-tool .corporate-details summary { cursor:pointer; color:var(--color-dns-mid); font-size:.8rem; }
+.public-tool.logo-resources > .resource-card { grid-column: 2; border:0; box-shadow:none; padding:.2rem 0; font-size:.8rem; }
+.public-tool .resource-action { font-size:.75rem; padding:.3rem .5rem; min-height: 26px; }
+.public-tool .brand-guideline { font-size:.8rem; }
+
+@media (hover:hover) and (pointer:fine) {
+  a.destination, a.public-tool { transition: transform var(--dns-motion-fast) var(--dns-motion-easing), box-shadow var(--dns-motion-fast) var(--dns-motion-easing); }
+  a.destination:hover, a.public-tool:hover { transform:translateY(-4px); box-shadow:0 14px 26px color-mix(in srgb, var(--color-dns-mid) 20%, transparent); }
+}
+@media (max-width: 1023px) { .public-grid {grid-template-columns:repeat(2,minmax(0,1fr));} }
+@media (max-width: 767px) {
+  .portal-hero {padding:1.4rem 0 2rem; min-height:220px;}
+  .hero-signals {display:none;}
+  .intranet {margin-top:0;}
+  .access-grid, .public-grid {grid-template-columns:1fr;}
+  .access-grid .resource-card {min-height:160px;grid-template-columns:50px 1fr;padding:1rem;}
+  .destination .portal-icon:first-child {width:44px;height:44px;}
+  .destination .portal-icon:first-child svg {width:26px;height:26px;}
+}
+@media (prefers-reduced-motion:reduce) {
+  a.destination, a.public-tool {transition:none;}
+  a.destination:hover, a.public-tool:hover {transform:none;}
+}
