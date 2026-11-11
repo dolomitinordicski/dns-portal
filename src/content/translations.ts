@@ -10,8 +10,8 @@ export const translations = {
     logos: 'Loghi', logosDescription: 'Formati ufficiali', logoWeb: 'Versione web', logoPrint: 'Versione stampa', download: 'Apri',
     widget: 'Widget Creator', widgetDescription: 'Per il tuo sito.',
     intranet: 'Accesso riservato', who: 'Dove vuoi entrare?',
-    partner: 'Esercizi Partner', partnerDescription: 'Per strutture e alloggi.',
-    area: 'Organizzzioni', areaDescription: 'Per i partner territoriali.',
+    partner: 'Partner Hub', partnerDescription: 'Per strutture e alloggi partner.',
+    area: 'Workspace', areaDescription: 'Per le organizzazioni territoriali.',
     enter: 'Entra', pending: 'In preparazione',
     footer: 'Dolomiti NordicSki'
   },
@@ -24,8 +24,8 @@ export const translations = {
     logos: 'Logos', logosDescription: 'Offizielle Varianten', logoWeb: 'Webversion', logoPrint: 'Druckversion', download: 'Öffnen',
     widget: 'Widget Creator', widgetDescription: 'Für eure Website.',
     intranet: 'Geschützter Zugang', who: 'Wohin möchtet ihr?',
-    partner: 'Partnerbetriebe', partnerDescription: 'Für Betriebe und Unterkènfte.',
-    area: 'Organisationen', areaDescription: 'Für die regionalen Partnern.',
+    partner: 'Partner Hub', partnerDescription: 'Für Betriebe und Partnerunterkènfte.',
+    area: 'Workspace', areaDescription: 'Für die regionalen Organisationen.',
     enter: 'Öffnen', pending: 'In Vorbereitung',
     footer: 'Dolomiti NordicSki'
   },
@@ -38,8 +38,8 @@ export const translations = {
     logos: 'Logos', logosDescription: 'Official formats', logoWeb: 'Web version', logoPrint: 'Print version', download: 'Open',
     widget: 'Widget Creator', widgetDescription: 'For your website.',
     intranet: 'Private access', who: 'Where would you like to go?',
-    partner: 'Partners', partnerDescription: 'For businesses and partners.',
-    area: 'Organization', areaDescription: 'For regional partners.',
+    partner: 'Partner Hub', partnerDescription: 'For businesses and partners.',
+    area: 'Workspace', areaDescription: 'For regional organizations.',
     enter: 'Enter', pending: 'Coming soon',
     footer: 'Dolomiti NordicSki'
   }
