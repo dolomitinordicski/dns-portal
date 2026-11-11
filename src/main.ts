@@ -54,7 +54,7 @@ const translations = {
 // Published resources are owned by DNS Shared Data. No copied logo files or color definitions.
 const assetBase = `https://raw.githubusercontent.com/dolomitinordicski/dns-shared-data/foundation-v${DNS_FOUNDATION_RELEASE_VERSION}/brand`;
 const logoWebUrl = `${assetBase}/logo-web.png`;
-const logoPrintUrl = `${assetBase}/logo-print.png`;
+const logoPrintUrl = `${assetBase}/logo.png`;
 const workspaceUrl = import.meta.env.VITE_DNS_WORKSPACE_URL || 'https://dolomitinordicski.github.io/dns-workspace/';
 const partnerHubUrl = import.meta.env.VITE_DNS_PARTNER_HUB_URL || '';
 // Enable this only when the public Widget Creator has a verified direct URL.
