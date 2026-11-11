@@ -16,7 +16,6 @@ export function PortalHeader({ language, onLanguageChange }: {
         </div>
       </div>
       <div className="dns-tool-header-actions">
-        <div data-dns-accessibility-mount="" />
         <nav className="dns-tool-header-language" aria-label="Language">
           {languages.map(lang => <button key={lang} type="button" lang={lang}
             className="dns-tool-header-session-action" aria-pressed={language === lang}
