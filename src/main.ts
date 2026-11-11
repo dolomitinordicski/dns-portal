@@ -6,6 +6,7 @@ import { initDNSFoundation } from '@dolomitinordicski/dns-shared-data/foundation
 import { DNS_FOUNDATION_RELEASE_VERSION } from '@dolomitinordicski/dns-shared-data/release';
 import { DNS_DESIGN_SYSTEM } from '@dolomitinordicski/dns-shared-data/design-system';
 import { initDNSNavigationStyles } from '@dolomitinordicski/dns-shared-data/ui/navigation';
+import { BRAND_GUIDELINES } from './content/brand-guidelines';
 import './styles.css';
 
 type Language = 'it' | 'de' | 'en';
@@ -143,6 +144,19 @@ function render() {
     palette.append(item);
   });
   brandCard.append(palette);
+  const guidelines = element('div', 'guidelines');
+  BRAND_GUIDELINES.forEach(guideline => {
+    const details = element('details', 'brand-guideline');
+    const summary = element('summary', undefined, guideline.title[language]);
+    details.append(summary, element('p', 'resource-description', guideline.description[language]));
+    const allowed = element('ul');
+    guideline.dos.forEach(item => allowed.append(element('li', undefined, '✓ ' + item[language])));
+    const disallowed = element('ul');
+    guideline.donts.forEach(item => disallowed.append(element('li', undefined, '✕ ' + item[language])));
+    details.append(allowed, disallowed);
+    guidelines.append(details);
+  });
+  brandCard.append(guidelines);
   publicGrid.append(
     brandCard,
     resource(t.logoWeb, 'PNG', logoWebUrl, t.download),
