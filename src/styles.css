@@ -1,41 +1,71 @@
-/* Portal-specific composition only. Foundation owns brand, header, footer, cards,
-   buttons, typography, colors, responsive shell and interaction semantics. */
-* { box-sizing: border-box; }
+/* DNS Portal: composition only. All component visuals, corporate colors,
+   typography, radii, header/footer and accessibility come from Foundation 1.4.1. */
+*, *::before, *::after { box-sizing: border-box; }
 html, body { margin: 0; min-height: 100%; }
-body { font-family: var(--font-body); background: var(--color-dns-bg); color: var(--color-dns-dark-text); }
+body { font-family: var(--font-body); color: var(--color-dns-dark-text); background: var(--color-dns-bg); }
 #app { min-height: 100vh; display: flex; flex-direction: column; }
-.dns-portal-language { border: 0; border-bottom: 2px solid transparent; background: transparent; color: var(--dns-header-subtitle-color); padding: .5rem .3rem; font: 700 var(--dns-label-size)/1 var(--font-alt); cursor: pointer; }
-.dns-portal-language[aria-pressed="true"] { color: var(--dns-header-title-color); border-bottom-color: currentColor; }
-.main { width: 100%; max-width: 980px !important; align-self: center; flex: 1; display: flex; flex-direction: column; justify-content: center; padding-block: 5rem; }
-.intro { text-align: center; margin-bottom: 2.4rem; }
-.intro h1 { font-size: clamp(1.8rem, 4vw, 2.7rem); font-weight: 700; margin: .65rem 0 .8rem; color: var(--color-dns-deep); }
-.intro>p:last-child { font-size: 1rem; color: var(--color-dns-muted); }
-.cards, .public-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: var(--dns-card-gap); }
-.portal-section { margin-top: 2.25rem; }
-.section-heading { margin-bottom: 1rem; }
-.section-description { color: var(--color-dns-muted); margin: .35rem 0 0; }
-.resource-card { min-width: 0; padding: var(--dns-card-padding); display: flex; flex-direction: column; align-items: flex-start; gap: .7rem; color: inherit; text-decoration: none; border: 1px solid var(--color-dns-border); }
-.resource-title { font-size: 1.1rem; margin: 0; color: var(--color-dns-deep); }
-.resource-description { font-size: .9rem; margin: 0; line-height: 1.5; color: var(--color-dns-muted); }
-.resource-action { margin-top: auto; }
-.palette { display: flex; flex-wrap: wrap; gap: .65rem; }
-.guidelines { display: grid; gap: .45rem; width: 100%; }
-.brand-guideline { border-top: 1px solid var(--color-dns-border); padding: .6rem 0; font-size: .8rem; }
-.brand-guideline summary { color: var(--color-dns-deep); cursor: pointer; font-weight: 600; }
-.brand-guideline p { margin: .6rem 0; }
-.brand-guideline ul { padding-inline-start: 1rem; margin: .45rem 0; color: var(--color-dns-muted); }
-.color-sample { display: flex; align-items: center; gap: .4rem; font-size: .75rem; }
-.color-swatch { display: inline-block; height: 1.15rem; width: 1.15rem; border-radius: var(--dns-control-radius); border: 1px solid var(--color-dns-border); }
-a.resource-card:hover { transform: translateY(-2px); }
 
-.destination { min-height: 180px; padding: var(--dns-card-padding); display: flex; flex-direction: column; align-items: flex-start; gap: .75rem; color: inherit; text-decoration: none; border: 1px solid var(--color-dns-border); background: var(--dns-card-bg); transition: transform var(--dns-motion-fast); }
-a.destination:hover { transform: translateY(-2px); }
-.destination-icon { font-size: 1.7rem; color: var(--color-dns-mid); }
-.destination h2 { font-size: 1.3rem; margin: .2rem 0; color: var(--color-dns-deep); }
-.destination p { font-size: .9rem; line-height: 1.6; color: var(--color-dns-muted); margin: 0 0 .5rem; }
-.cta { margin-top: auto; }
+.main {
+  flex: 1;
+  width: min(100%, var(--dns-shell-max-width));
+  margin-inline: auto;
+  padding: 3rem var(--dns-shell-padding-x);
+}
+.intro { margin-bottom: 2rem; }
+.intro h1 { font-family: var(--font-heading); color: var(--color-dns-deep); margin: .4rem 0; }
+.intro p:last-child, .section-description, .resource-description, .notice { color: var(--color-dns-muted); }
+
+.portal-section { margin-block: 2rem; }
+.section-heading { margin-bottom: 1rem; }
+.section-description { margin: .35rem 0 0; }
+.cards, .public-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--dns-card-gap);
+}
+.resource-card {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--dns-compact-gap);
+  padding: var(--dns-card-padding);
+  border: 1px solid var(--color-dns-border);
+  color: inherit;
+  text-decoration: none;
+}
+.resource-title { color: var(--color-dns-deep); margin: 0; }
+.resource-description { margin: 0; line-height: 1.5; }
+.resource-action { margin-top: auto; }
+.destination { min-height: 175px; }
 .unavailable { opacity: .7; }
-.notice { text-align: center; margin: 1.8rem 0 0; font-size: .8rem; color: var(--color-dns-muted); }
-a:focus-visible, button:focus-visible { outline: 2px solid var(--dns-control-focus); outline-offset: 3px; }
-@media(max-width: 650px) { .main { padding-block: 3rem; } .cards, .public-grid { grid-template-columns: 1fr; } .destination { min-height: 200px; } .intro { text-align: left; } }
-@media(prefers-reduced-motion: reduce) { .destination { transition: none; } a.destination:hover { transform: none; } }
+.notice { margin: 1.25rem 0 0; }
+
+.palette { display: flex; flex-wrap: wrap; gap: var(--dns-compact-gap); }
+.color-sample { display: inline-flex; align-items: center; gap: .45rem; font-size: .8rem; }
+.color-swatch {
+  display: inline-block;
+  inline-size: 1.15rem;
+  block-size: 1.15rem;
+  border: 1px solid var(--color-dns-border);
+  border-radius: var(--dns-control-radius);
+}
+.guidelines { display: grid; width: 100%; gap: var(--dns-compact-gap); }
+.brand-guideline { padding-block: .6rem; border-top: 1px solid var(--color-dns-border); }
+.brand-guideline summary { cursor: pointer; color: var(--color-dns-deep); font-weight: 600; }
+.brand-guideline p { margin-block: .6rem; }
+.brand-guideline ul { margin-block: .4rem; padding-inline-start: 1.2rem; color: var(--color-dns-muted); }
+
+/* The one Portal-specific effect explicitly approved: interactive cards lift on hover. */
+@media (hover: hover) and (pointer: fine) {
+  a.resource-card { transition: transform var(--dns-motion-fast) var(--dns-motion-easing); }
+  a.resource-card:hover { transform: translateY(-3px); }
+}
+@media (max-width: 767px) {
+  .main { padding-inline: var(--dns-shell-padding-x-mobile); }
+  .cards, .public-grid { grid-template-columns: 1fr; }
+}
+@media (prefers-reduced-motion: reduce) {
+  a.resource-card { transition: none; }
+  a.resource-card:hover { transform: none; }
+}
