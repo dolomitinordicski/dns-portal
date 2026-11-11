@@ -1,5 +1,0 @@
-/* Partner Hub Widget Creator utilities, without Tailwind preflight:
-   Foundation 1.4.1 retains ownership of the Portal shell. */
-@import "tailwindcss/theme";
-@import "tailwindcss/utilities";
-@source "./features/widget-creator";
