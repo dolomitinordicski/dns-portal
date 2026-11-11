@@ -1,13 +1,13 @@
 import { DNS_DESIGN_SYSTEM } from '@dolomitinordicski/dns-shared-data';
 import React, { useState } from 'react';
 import type { Language } from '../../content/translations';
-import { getWidgetAreaName } from './widget-creator/reportingAreas';
-import { OFFICIAL_PALETTES, createWidgetEmbed, type WidgetThemePreset } from './widget-creator/embedModel';
-import { WidgetControls } from './widget-creator/WidgetControls';
+import { getWidgetAreaName } from './reportingAreas';
+import { OFFICIAL_PALETTES, createWidgetEmbed, type WidgetThemePreset } from './embedModel';
+import { WidgetControls } from './WidgetControls';
 import { Code } from 'lucide-react';
 import { SEASONS } from '@dolomitinordicski/dns-shared-data';
-import { usePublicWidgetSnapshot } from './widget-creator/usePublicWidgetSnapshot';
-import { PublishedWidgetData } from './widget-creator/PublishedWidgetData';
+import { usePublicWidgetSnapshot } from './usePublicWidgetSnapshot';
+import { PublishedWidgetData } from './PublishedWidgetData';
 
 interface WidgetCreatorProps {
   lang: Language;
