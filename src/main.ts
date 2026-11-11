@@ -8,6 +8,7 @@ import { DNS_DESIGN_SYSTEM } from '@dolomitinordicski/dns-shared-data/design-sys
 import { initDNSNavigationStyles } from '@dolomitinordicski/dns-shared-data/ui/navigation';
 import { BRAND_GUIDELINES } from './content/brand-guidelines';
 import './styles.css';
+import './portal-visual.css';
 
 import { translations, type Language } from './content/translations';
 
