@@ -243,3 +243,12 @@ a.resource-card:focus-visible, .logo-download:focus-visible, .corporate-details 
   .access-grid .resource-card { grid-template-columns: 44px minmax(0, 1fr); column-gap: .75rem; }
   .destination .portal-icon:first-child { width: 40px; height: 40px; }
 }
+
+/* Public widget card preserves the standard three-card layout and hover. */
+button.widget-public-link { appearance: none; width: 100%; text-align: left; font-family: inherit; cursor: pointer; }
+button.widget-public-link:focus-visible { outline: 3px solid var(--color-dns-mid); outline-offset: 3px; }
+@media (hover:hover) and (pointer:fine) {
+  button.widget-public-link { transition: transform var(--dns-motion-fast) var(--dns-motion-easing), box-shadow var(--dns-motion-fast) var(--dns-motion-easing); }
+  button.widget-public-link:hover { transform: translateY(-4px); box-shadow: 0 14px 26px color-mix(in srgb, var(--color-dns-mid) 20%, transparent); }
+}
+@media (prefers-reduced-motion:reduce) { button.widget-public-link { transition: none; } button.widget-public-link:hover { transform:none; } }

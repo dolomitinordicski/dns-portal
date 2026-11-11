@@ -7,6 +7,8 @@ import { createRoot } from 'react-dom/client';
 import App from './app/App';
 import './styles.css';
 import './portal-visual.css';
+import './widget-tailwind.css';
+import './widget-page.css';
 
 const container = document.getElementById('app');
 if (!container) throw new Error('Missing app root');
